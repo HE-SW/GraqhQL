@@ -1,0 +1,15 @@
+{
+    "name": "graphql",
+    "version": "1.0.0",
+    "main": "index.js",
+    "private": "true",
+    "workspaces": [
+        "front",
+        "server"
+    ],
+    "scripts": {
+        "front": "yarn workspace front dev",
+        "server": "yarn workspace server start",
+        "codegen": "graphql-codegen --config codegen.ts"
+    }
+}
