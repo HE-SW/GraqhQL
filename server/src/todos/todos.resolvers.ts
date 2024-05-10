@@ -2,7 +2,7 @@ const todosModel = require("./todos.model");
 
 module.exports = {
     Query: {
-        allTodos: () => {
+        todos: () => {
             return todosModel.getAllTodos();
         },
     },

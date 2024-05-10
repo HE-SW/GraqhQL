@@ -1,4 +1,6 @@
-const todos = [
+import { ITodo } from "../generated/graphql";
+
+const todos:ITodo[] = [
     {
         id: "1",
         text: "It is a first comment",
@@ -31,14 +33,9 @@ function updateTodo(id: string, text?: string, checked?: boolean) {
 
 function removeTodo(id: string) {
     const index = todos.findIndex((todo) => todo.id == id);
-    if (index > -1) {
-        todos.splice(index, 1);
-        return {
-            result: true,
-        };
-    } else {
-        return { result: false };
-    }
+    const find = [...todos][index]
+    todos.splice(index, 1);
+    return find
 }
 
 module.exports = {

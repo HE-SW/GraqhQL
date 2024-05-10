@@ -1,18 +1,15 @@
 type Query {
-    allTodos: [todo]
+    todos: [Todo]
+    todosByChecked(checked:Boolean!): [Todo]
 }
 
 type Mutation {
-    createTodo(text: String!, checked: Boolean!): todo
-    updateTodo(id: ID!, text: String, checked: Boolean): todo
-    removeTodo(id: ID!): result
+    createTodo(text: String!, checked: Boolean!): Todo
+    updateTodo(id: ID!, text: String, checked: Boolean): Todo
+    removeTodo(id: ID!): Todo
 }
 
-type result {
-    result: Boolean
-}
-
-type todo {
+type Todo {
     id: ID!
     text: String!
     checked: Boolean!

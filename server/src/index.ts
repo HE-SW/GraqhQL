@@ -1,13 +1,13 @@
 import express from "express";
-import { makeExecutableSchema } from "@graphql-tools/schema";
-import { loadFilesSync } from "@graphql-tools/load-files";
-import * as path from "path";
-import { ApolloServer } from "@apollo/server";
-import { expressMiddleware } from "@apollo/server/express4";
-import cors from "cors";
-import http from "http";
-import Keyv from "keyv";
-import { KeyvAdapter } from "@apollo/utils.keyvadapter";
+const { makeExecutableSchema }= require("@graphql-tools/schema")
+const { loadFilesSync }= require("@graphql-tools/load-files")
+const  path = require("path")
+const { ApolloServer }= require("@apollo/server")
+const { expressMiddleware }= require("@apollo/server/express4")
+const cors =require("cors")
+const http =require("http")
+const Keyv =require("keyv")
+const { KeyvAdapter } =require("@apollo/utils.keyvadapter")
 
 const loadedTypes = loadFilesSync("**/*", { extensions: ["graphql"] });
 const loadedResolvers = loadFilesSync(path.join(__dirname, "**/*.resolvers.ts"));
@@ -29,10 +29,10 @@ async function startApolloServer() {
 
     app.use(
         "/graphql",
-        cors<cors.CorsRequest>(),
+        cors(),
         express.json(),
         expressMiddleware(server, {
-            context: async ({ req }) => ({ token: req.headers.token }),
+            context: async ({ req }:any) => ({ token: req.headers.token }),
         })
     );
 

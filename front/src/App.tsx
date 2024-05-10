@@ -1,10 +1,22 @@
 import TodoItem from "./components/TodoItem";
-import { useAddTodoMutation, useGetTodosQuery } from "./generated/graphql";
+import { useAddTodoMutation, useGetTodosQuery, GetTodosDocument, AddTodoDocument } from "./generated/graphql";
 import { useState } from "react";
+import { AllTodosCache, IList } from "./types";
 
 function App() {
     const { loading, error, data } = useGetTodosQuery();
-    const [addTodo, { error: addError }] = useAddTodoMutation();
+    const [addTodo, { error: addError }] = useAddTodoMutation({
+        update(cache, {data}) {
+            const createTodo = data?.createTodo
+            const todos = cache.readQuery<AllTodosCache>({query:GetTodosDocument})?.allTodos
+            cache.writeQuery({
+                query: AddTodoDocument,
+                data: {
+                    allTodos: [createTodo, ...todos as IList[]]
+                }
+            })
+        }
+    });
     const [input, setInput] = useState("");
 
     const counter = (): string => {
@@ -27,9 +39,10 @@ function App() {
         setInput("");
     };
 
-    if (error) {
+    if (error && addError) {
         return <div>Network Error</div>;
     }
+
     return (
         <div className="flex flex-col items-center">
             <div className="mt-5 text-3xl">
