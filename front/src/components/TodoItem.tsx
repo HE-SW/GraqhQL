@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { Todo } from "../generated/graphql";
 import { FiEdit, FiMinusCircle } from "react-icons/fi";
 
 type Props = {
-    item: Todo | null;
+    item: any| null;
 };
 
 const TodoItem = ({ item }: Props) => {
     const [edit, setEdit] = useState(false);
-    const [task, setTask] = useState(item?.text);
+    const [task, setTask] = useState(item?.title);
 
-    const handleChange = () => {};
+    const handleChange = () => {
+    };
 
     return (
         <li className="flex items-center justify-between p-5 my-3 text-2xl duration-300 hover:scale-105 border-2 rounded-md shadow-md">

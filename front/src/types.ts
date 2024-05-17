@@ -1,10 +1,10 @@
-export interface IList {
-    text: string;
+export interface ITodo {
+    title: string;
     checked: boolean;
     id: number;
     __typename?: string;
 }
 
-export interface AllTodosCache {
-    allTodos: IList[];
+export interface TodosCache {
+    todos: ITodo[];
 }

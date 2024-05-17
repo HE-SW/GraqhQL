@@ -1,52 +1,29 @@
-import TodoItem from "./components/TodoItem";
-import { useAddTodoMutation, useGetTodosQuery, GetTodosDocument, AddTodoDocument } from "./generated/graphql";
-import { useState } from "react";
-import { AllTodosCache, IList } from "./types";
+import { useMemo, useState } from "react";
 
 function App() {
-    const { loading, error, data } = useGetTodosQuery();
-    const [addTodo, { error: addError }] = useAddTodoMutation({
-        update(cache, {data}) {
-            const createTodo = data?.createTodo
-            const todos = cache.readQuery<AllTodosCache>({query:GetTodosDocument})?.allTodos
-            cache.writeQuery({
-                query: AddTodoDocument,
-                data: {
-                    allTodos: [createTodo, ...todos as IList[]]
-                }
-            })
-        }
-    });
+
     const [input, setInput] = useState("");
 
-    const counter = (): string => {
-        if (data?.allTodos) {
-            const completed = data.allTodos.filter((todo) => todo?.checked);
-            return `${completed.length}/${data.allTodos.length}`;
-        }
-        return "0/0";
-    };
+
+    const counter = () =>{
+        // if(data?.todos as ) {
+            // const completed = 
+            return `${0}/${0}` 
+            // }
+    }
 
     const handleSumbit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (input.trim() === "") return;
-        addTodo({
-            variables: {
-                text: input,
-                checked: false,
-            },
-        });
         setInput("");
     };
 
-    if (error && addError) {
-        return <div>Network Error</div>;
-    }
+
 
     return (
         <div className="flex flex-col items-center">
             <div className="mt-5 text-3xl">
-                Todo App<span className="text-sm">({counter()})</span>
+                Todo App<span className="text-sm">{counter()}</span>
             </div>
             <div className="w-5/6 md:w-1/2 lg:-3/5">
                 <form onSubmit={handleSumbit} className="flex justify-between p-5 my-5 text-4xl border-2 rounded-md shadow-md">
@@ -65,16 +42,11 @@ function App() {
                         </button>
                     </div>
                 </form>
-                {loading ? (
-                    <div>loading....</div>
-                ) : (
                     <ul>
-                        {data?.allTodos &&
-                            data.allTodos.map((todo) => {
+                        {/* {data && data.todos?.map((todo) => {
                                 return <TodoItem key={todo?.id} item={todo} />;
-                            })}
+                            })} */}
                     </ul>
-                )}
             </div>
         </div>
     );
