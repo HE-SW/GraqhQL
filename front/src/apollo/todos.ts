@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const GET_TODOS = gql`
     query todos {
@@ -11,7 +11,7 @@ export const GET_TODOS = gql`
 `;
 
 export const ADD_TODO = gql`
-    mutation createTodo($title: String!  ) {
+    mutation createTodo($title: String!) {
         createTodo(title: $title) {
             id
             title
